@@ -1,0 +1,65 @@
+\documentclass[twocolumn]{article}
+\usepackage{amsmath, amssymb, amsthm, mathtools, fullpage}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+ 
+\setlength{\parindent}{0em}
+\setlength{\parskip}{0.5em}
+
+ 
+\theoremstyle{plain}
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemma}
+\newtheorem{cor}{Corollary}
+\newtheorem{prop}{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\begin{document}
+
+\title{Proof of $\mathtt{(A \& B) + (A|B)=A+B}$}
+\author{Matthew Fox and Gabe Bessler}
+\date{}
+
+\maketitle
+\section{Introduction}
+Given two sets $A=\{a_n,a_{n-1},\cdots, a_1\}$ and $B=\{b_n,b_{n-1},\cdots, b_1\}$, where both $A$ and $B\subset \mathbb{Z}$ and $|A|=|B|$, we define the \emph{direct sum} as \begin{equation} A\oplus B = \{a_n+b_n, a_{n-1}+b_{n-1}, \cdots, a_1+b_1 \}.\end{equation} Suppose we restrict $A$ and $B$ to Boolean valued sets---that is, asserting all $a_i$ and $b_i\in \{0,1\}$. Further, suppose we restrict each element in the direct sum $A\oplus B$ to be Boolean valued. This last restriction introduces an apparent obstacle as it asserts for any $(a_i,b_i)$ pair, $a_i\neq b_i$ and thus the elemental sum $a_i+b_i<2.$ To circumvent such a restriction, we append an additional carry term $c_{i+1}^*=1$ to the direct sum. Thus, if $a_i=b_i=1$ then $$A\oplus B = \{\cdots, a_{i+1}+b_{i+1}+c_{i+1}^*, 0, a_{i-1} + b_{i-1}, \cdots\}$$ implying $a_{i}+b_i = 0$ for any $a_i=b_i.$ The same process continues up the set of $A\oplus B$. However, if all $a_i=b_i=c_i^*=1,$ then $a_i+b_i+c_{i}^*=1,$ with $c^*_{i+1}=1$. Further, if $|A\oplus B| = n$ and $a_n=b_n = 1$ (or similar expression including $c^*$), then we append an additional element at position $n+1$ equal to $c^*_{n+1} = 1$, thereby creating the final set $$A\oplus B = \{c^*_{n+1},a_n+b_n, \cdots , a_1+b_1  \} $$
+
+The above describes binary addition through a direct sum of two Boolean valued sets. We now consider the main contribution of this writeup
+\section{$\mathtt{(A \& B) + (A|B)=A+B}$}
+Suppose $A$ and $B$ are Boolean valued sets, where $A=\{a_n, a_{n-1},\cdots, a_0\}\ \text{and}\ B=\{b_m,b_{m-1},\cdots, b_0\}$ where each $a_i,b_i\in\{0,1\}$. 
+If $|A| > |B|$, then define $z=|A| - |B|$. Let $B^*=\{b_{m+z}, b_{m+z-1},
+\cdots, b_m,\cdots,b_0\}$ where for each $i>m$, $b_i = 0$. Thus both sets have the same cardinality. If $|A| < |B|$, the same procedure follows for the new set $A^*$, thereby creating two Boolean valued sets of identical cardinality. Consider some $(a_k, b_k)$ pair where $0\leq k\leq n.$ 
+
+\textbf{Case One: } $a_k = b_k$
+
+Then it is clear that 
+$$a_k \& b_k = a_k=b_k\ \text{and}\ a_k | b_k = a_k=b_k$$
+
+Thus,
+\begin{equation} (a_k \& b_k) + (a_k | b_k) = a_k + b_k \end{equation}
+
+\textbf{Case Two:} $a_k \neq b_k$
+
+Then either $a_k=1$ and $b_k=0$ or $a_k=0$  and $b_k=1$. This implies
+$$ a_k \& b_k = 0\ \text{and}\ a_k | b_k  = 1$$
+
+Thus,
+$$(a_k \& b_k) + (a_k | b_k) = 1 = a_k + b_k,$$ which is identical to eq 2.
+
+\begin{thm}
+For any two Boolean valued sets $A$ and $B$, where $A = \{a_n, a_{n-1}, \cdots, a_0 \}\ \text{and}\ B = \{b_n, b_{n-1}, \cdots, b_0\} $ \begin{equation}(A\&B)+(A|B)=A\oplus B \end{equation}
+\end{thm}
+\begin{proof}
+As determined in section one, the direct sum of two Boolean sets is 
+\begin{equation}A \oplus B = \{c^*_{n+1}, a_n + b_n, a_{n-1} + b_{n-1},\cdots,a_0 + b_0\}\end{equation} where if $a_k=b_k=1,$ we set $a_k + b_k = 0$ and carry the remainder to the $k+1$ element, ultimately leaving some leading element $c_{n+1}^*$. By eq 2 and the result found in Case 2, we see the operation $(a_k\&b_k)+(a_k|b_k)$ for all elements in $A$ and $B$ yields an identical element-by-element sum to that in eq 1. Thus is is clear that $(A\&B)+(A|B)=A\oplus B$. 
+\end{proof}
+
+A simple corollary of this result is that, instead of directly summing two Boolean valued sets, the result will hold for the basic sum of two binary digits, as the direct sum of two Boolean valued sets and binary addition are identical. 
+
+
+\end{document}
